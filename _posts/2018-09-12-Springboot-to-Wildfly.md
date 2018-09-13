@@ -76,10 +76,10 @@ public class MyProjectApplication extends SpringBootServletInitializer{
 로그를 확인하던 중 http://127.0.0.1:9990 로 들어가면 wildfly 관리자모드가 가능하다는 정보가 있어 bin\add_user 를 통해 사용자를 등록하고 관리자 모드로 확인해보았다. 그랬더니...context_root가 내 프로젝트명인 my-project-1.0.0-SNAPSHOT 으로 잡혀져 있었다.(!!)
 이걸 수정하려면 아래 파일을 webapp\WEB_INF\jboss_web.xml 로 생성하여 넣어주면 된다.
 ```
-<?xml version="1.0" encoding="UTF-8"?>
-<jboss-web>
-        <context-root>/</context-root>
-</jboss-web>
+    <?xml version="1.0" encoding="UTF-8"?>
+    <jboss-web>
+            <context-root>/</context-root>
+    </jboss-web>
 ```
 ## 결말
 이제 거의 다왔다! 위의 세단계를 거쳐 새 war파일을 배포해보니....이번에는 정상적으로 도는걸 확인할수 있었다.
