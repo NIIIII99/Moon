@@ -40,7 +40,7 @@ wildfly 서버의 standalone/deployments 폴더안에 war를 복사!!
 그랬다. 되지 않았다.
 어떠한 에러가 나면서 WEB.xml 을 찾을 수가 없댄다!
 이럴때는 구글링(*이라고 쓰고 구글님이라고 읽는다.*)이지!! 여기저기 정보의 바다를 찾아다니니 maven 3.0이상부터는 web.xml이 없어도 정상동작해야할텐데 만약 정상동작 하지 않는 경우 pom.xml에 요런걸 추가해서 WEB.xml이 없어도 오류가 나지 않도록 해주랜다.
-```xml
+```
 	    <plugins>
 	      <plugin>
 	        <groupId>org.apache.maven.plugins</groupId>
