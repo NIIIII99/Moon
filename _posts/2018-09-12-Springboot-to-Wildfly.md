@@ -18,7 +18,7 @@ comments: true
 tomcat을 빼고 undertow 서블릿을 적용해봤던 경험이 있었기에 아주 자신있게 말했다.
 "아, 저 그거 할줄 알아요. 엄청 간단해요~"
 
-## 전개
+## 전개 
 그 당시의 난 아주 단순하게 생각했었다.
 'packging을 WAR로 변경하고 embeded tomcat 대신 JBOSS가 지원하는 undertow나.. servlet 기능 있는 것만 넣으면 금방 되겠지!'
 어서 해서 메일을 보내고 방치에서 벗어나고 싶다고 생각한 의욕뿜뿜의 나는 어서 빨리 당장 톰캣을 제외하고 servlet을 넣었다.
