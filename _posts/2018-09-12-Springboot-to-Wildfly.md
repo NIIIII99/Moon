@@ -82,7 +82,6 @@ public class MyProjectApplication extends SpringBootServletInitializer{
         <context-root>/</context-root>
 </jboss-web>
 ```
-
 ## 결말
 이제 거의 다왔다! 위의 세단계를 거쳐 새 war파일을 배포해보니....이번에는 정상적으로 도는걸 확인할수 있었다.
 최종적으로 수정해야 하는 부분은 세군데이다.
