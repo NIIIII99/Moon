@@ -68,7 +68,6 @@ public class MyProjectApplication extends SpringBootServletInitializer{
     ...
 }
 ```
-https://medium.com/@SlackBeck/spring-boot-%EC%9B%B9-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98%EC%9D%84-war%EB%A1%9C-%EB%B0%B0%ED%8F%AC%ED%95%A0-%EB%95%8C-%EC%99%9C-springbootservletinitializer%EB%A5%BC-%EC%83%81%EC%86%8D%ED%95%B4%EC%95%BC-%ED%95%98%EB%8A%94%EA%B1%B8%EA%B9%8C-a07b6fdfbbde
 2. Windows 환경에서 서블릿이 강제 종료됨
 이번에는 오류 없이 잘 올라가는데 호출이 안되서 로그를 확인해보니 이상하게도 OS Signal로 인해 서버를 죽인다고 자꾸 내 서블릿을 죽이는 것이었다!!!
 (로그는 standalone\log 폴더에서 확인 가능하다.)
