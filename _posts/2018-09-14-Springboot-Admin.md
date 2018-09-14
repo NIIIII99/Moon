@@ -10,7 +10,7 @@ https://github.com/codecentric/spring-boot-admin
 * actuator에서 제공하는 정보는 다 볼 수 있음
 * Thread dump, log file 등등
 
-## 그외 기능
+### 그외 기능
 * endpoint를 사용자가 원하는 곳에 추가할 수 있음
 (어노테이션 추가로 어떤 method든지 모니터링 가능)
 * 로그 레벨을 변경하여 재기동 없이 바로 확인 가능
