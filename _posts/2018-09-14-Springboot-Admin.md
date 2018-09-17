@@ -24,7 +24,7 @@ https://github.com/codecentric/spring-boot-admin
 * 로그 레벨을 변경하여 재기동 없이 바로 확인 가능
 * /actuator 대신 다른 base URL 사용가능 (포트도 변경 가능)
 
-## 적용하려면?
+## security 없이 적용하려면? 
 ### spring-boot-admin-server 설정
 1. pom.xml 작성
 * spring.start.io 에서 빈 springboot app 생성. 후에 아래 dependency를 추가한다. 거기서 spring-boot-admin-server와 web를 추가 후 만들면 dependecy version이 잘 안맞는지 오류가 난다.... 꼭 나중에 따로 추가해주자.
@@ -66,7 +66,7 @@ public class SpringAdminApplication {
 		</dependency>	
 ```
 2. application.yml 수정
-```
+```yml
 spring:
   boot:
     admin:
