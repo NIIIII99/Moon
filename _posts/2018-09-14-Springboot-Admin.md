@@ -1,4 +1,5 @@
 
+## Springboot Admin이란?
 ---
 layout: post
 title: "Spring boot Admin 적용기(삽질기)"
@@ -8,7 +9,6 @@ tags: [spring-boot-admin, monitoring, springboot]
 comments: true
 ---
 
-## Springboot Admin이란?
 https://github.com/codecentric/spring-boot-admin
 
 * springboot는 /actuator Endpoint를 제공하여 프로그램의 모니터링을 가능하게 함.
