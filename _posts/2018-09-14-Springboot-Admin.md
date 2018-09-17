@@ -58,4 +58,10 @@ public class SpringAdminApplication {
 
 ### spring-boot-admin-client 설정 
 1. pom.xml 작성
-
+```xml
+		<dependency>
+		    <groupId>de.codecentric</groupId>
+		    <artifactId>spring-boot-admin-starter-client</artifactId>
+		    <version>2.0.2</version>
+		</dependency>	
+```
