@@ -65,3 +65,19 @@ public class SpringAdminApplication {
 		    <version>2.0.2</version>
 		</dependency>	
 ```
+2. application.yml 수정
+```
+spring:
+  boot:
+    admin:
+      client:
+        url: "http://localhost:8081" 
+management:
+  endpoints:
+    web:
+      exposure:
+         include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS           
+```        
