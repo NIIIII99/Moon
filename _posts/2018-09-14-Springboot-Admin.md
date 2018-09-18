@@ -81,3 +81,16 @@ management:
     health:
       show-details: ALWAYS           
 ```        
+
+### git commit info 확인하기
+* pom.xml 에 plugin 추가
+```xml
+<build>
+	<plugins>
+		<plugin>
+			<groupId>pl.project13.maven</groupId>
+			<artifactId>git-commit-id-plugin</artifactId>
+		</plugin>
+	</plugins>
+</build>
+```
