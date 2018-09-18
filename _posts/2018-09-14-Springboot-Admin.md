@@ -82,6 +82,79 @@ management:
       show-details: ALWAYS           
 ```        
 
+## security 로 적용하려면? 
+### spring-boot-admin-server 설정
+1. pom.xml 수정 : spring-boot-starter-security dependency 추가
+```xml
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>	
+```
+2. SecurityConfig.java 파일 추가 : WebSecurityConfigurerAdapter 를 상속받아서 login, logout 페이지로 접속할수 있게함.
+```java
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final String adminContextPath;
+    public SecurityConfig(AdminServerProperties adminServerProperties) {
+    	
+        this.adminContextPath = adminServerProperties.getContextPath();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+//        @formatter:off
+        SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
+        successHandler.setTargetUrlParameter("redirectTo");
+
+        http.authorizeRequests()
+                .antMatchers(adminContextPath + "/assets/**").permitAll()
+                .antMatchers(adminContextPath + "/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler).and()
+                .logout().logoutUrl(adminContextPath + "/logout").and()
+                .httpBasic().and()
+                .csrf().disable();
+    }
+  
+}
+```
+3. application.yml 수정 : 관리자 이름과 비밀번호 설정
+```yml
+spring:
+  security:
+    user:
+      name: "user"
+      password: "password"    
+```
+### spring-boot-admin-client 설정
+1. pom.xml 수정 : spring-boot-starter-security dependency 추가
+```xml
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+```
+2. application.yml 수정 : 관리자 이름과 비밀번호 spirng-boot-admin 과 동일하게 설정
+```yml
+spring: 
+  security:
+    user:
+      name: "user" # spirng-boot-admin 과 동일해야 함.
+      password: "password" # spirng-boot-admin 과 동일해야 함.         
+  boot:
+    admin:
+      client:
+        url: "http://localhost:8081" # spirng-boot-admin
+        username: ${spring.security.user.name}
+        password: ${spring.security.user.password}                   
+        instance:
+          metadata:
+            user.name: ${spring.security.user.name}
+            user.password: ${spring.security.user.password} 
+```
+
+
 ### git commit info 확인하기
 * pom.xml 에 plugin 추가
 ```xml
