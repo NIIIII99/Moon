@@ -155,8 +155,8 @@ spring:
 ```
 
 
-### git commit info 확인하기
-* pom.xml 에 plugin 추가
+## spring-boot-admin에서 git commit info 확인하기
+1. client의 pom.xml 에 plugin 추가
 ```xml
 <build>
 	<plugins>
@@ -166,4 +166,11 @@ spring:
 		</plugin>
 	</plugins>
 </build>
+```
+2. client의 application.yml 수정
+```yml
+management: 
+  info:
+    git:
+      mode: full
 ```
