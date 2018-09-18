@@ -155,7 +155,15 @@ spring:
 ```
 
 
-## spring-boot-admin에서 git commit info 확인하기
+## spring-boot-admin 활용하기
+### logfile 확인하기
+* 로그를 console이 아닌 file로 출력하도록 설정(여기에정리) 후 경로만 client쪽 application.yml에 명시하면 자동으로 admin server화면에서 logfile 탭이 생성되면서 logefile을 확인할 수 있다.
+```yml
+logging:
+  file: ./logs/data.log
+```
+### git commit info 확인하기
+* client쪽에 설정하면 admin server의 details 탭에서 git 관련 정보(commit 버전, user, git 주소, branch 명, artifact 버전)를 볼 수 있다.
 1. client의 pom.xml 에 plugin 추가
 ```xml
 <build>
