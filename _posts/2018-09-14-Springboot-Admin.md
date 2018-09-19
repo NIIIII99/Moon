@@ -114,7 +114,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler).and()
                 .logout().logoutUrl(adminContextPath + "/logout").and()
                 .httpBasic().and()
-                .csrf().disable();
+                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())  
+                .ignoringAntMatchers(
+                        adminContextPath + "/instances",   
+                        adminContextPath + "/actuator/**"  
+                   ); 
     }
   
 }
@@ -192,5 +196,5 @@ spring:
 management: 
   info:
     git:
-      mode: full
+      mode: full # 혹은 simple
 ```
