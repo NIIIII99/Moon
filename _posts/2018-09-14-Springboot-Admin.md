@@ -162,6 +162,18 @@ spring:
 logging:
   file: ./logs/data.log
 ```
+
+### http trace 확인하기
+* http trace 탭 클릭시 정상적으로 동작하지 않는다면, 아래 설정을 client의 application.yml 안에 해주면 된다. 원인은 /actuator/httptrace의  timestamp가 spring boot admin 에서 생각하는 대로 넘어가지 않아서 발생하는 현상일 가능성이 매우 높다. 아래 설정으로 timestamp 형식을 수정해주면 정상적으로 동작한다.
+```yml
+spring:
+  jackson:
+    serialization:            
+      write-dates-as-timestamps: true
+      write-date-timestamps-as-nanoseconds: false   
+```
+* 이설정이 동작하지 않는 경우 혹시 소스내에 @EnableWebMvc나 WebMVCConfigurerSupport 를 implements한 부분이 있는지 확인 해보길 바란다. 저런 아이들은 스프링부트의 자동설정된 configuration을 자기네가 제어하기 때문에 내가 아무리 설정해도 먹히지 않는다.
+
 ### git commit info 확인하기
 * client쪽에 설정하면 admin server의 details 탭에서 git 관련 정보(commit 버전, user, git 주소, branch 명, artifact 버전)를 볼 수 있다.
 1. client의 pom.xml 에 plugin 추가
