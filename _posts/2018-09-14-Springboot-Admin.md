@@ -39,11 +39,13 @@ https://github.com/codecentric/spring-boot-admin
 		    <artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 ```
+
 2. application.yml 작성
 ```
 server:
   port: 8081 # application과 겹치지 않는 port로..
 ```
+
 3. Application.java 작성
 ```java
 @SpringBootApplication
@@ -65,6 +67,7 @@ public class SpringAdminApplication {
 		    <version>2.0.2</version>
 		</dependency>	
 ```
+
 2. application.yml 수정
 ```yml
 spring:
@@ -191,10 +194,31 @@ spring:
 	</plugins>
 </build>
 ```
+
 2. client의 application.yml 수정
 ```yml
 management: 
   info:
     git:
       mode: full # 혹은 simple
+```
+
+### build info 확인하기
+1. pom.xml 수정
+```xml
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 ```
