@@ -41,4 +41,9 @@ log 관련 설정은 logback-sping.xml로 명시하는게 좋다고 가이드문
 			</timeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>
 	</appender>
+
+	<logger name="com.example.demo" level="debug" additivity="false">
+		<appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+	</logger>
 ```
