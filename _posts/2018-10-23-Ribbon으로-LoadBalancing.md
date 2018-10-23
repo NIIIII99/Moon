@@ -38,6 +38,7 @@ comments: true
 ```yml
 ...
 store: #원하는 client server 명
+  ribbon:
     listOfServers: localhost:8888,localhost:8090 #라우팅하고자 하는 server list
 ...    
 ```
@@ -66,4 +67,41 @@ store: #원하는 client server 명
 수정 후 확인해보면 라운드로빈 방식으로 서버 목록에 있는 서버들을 라우팅 한다는걸 알 수 있다.
 하지만 서버들 중 하나가 내려가있는 상황에도 서버의 상태와 상관없이 라운드 로빈으로 라우팅 하게 된다. 다음에는 정상적인 서버에만 라우팅 할 수 있도록 Ribbon의 Configuration을 변경해보겠다.
 
-## Ribbon의 Configuration 변경
+## Ribbon의 Configuration Class 생성을 통해 Configuration 변경
+### Ribbon configuration class 생성
+```java
+public class StoreConfiguration {
+	@Bean
+	public IPing ribbonPing(IClientConfig config) {
+		return new PingUrl();
+//		return new PingUrl(false,"/actuator/health"); //원하는 ping url이 있는 경우
+	}
+
+	@Bean
+	public IRule ribbonRule(IClientConfig config) {
+		return new AvailabilityFilteringRule();
+	}
+}
+```
+### @RibbonClient 추가
+* @RibbonClient 를 추가하여 특정 클라이언트 서버에 대한 configuration class를 설정하거나 @RibbonClients를 추가하여 default configuration class를 설정한다.
+```java
+@SpringBootApplication
+@RibbonClients(defaultConfiguration = StoreConfiguration.class)
+//@RibbonClient(name="store", configuration = StoreConfiguration.class)
+public class DemoApplication {
+	public static void main(String[] args){        
+        SpringApplication.run(DemoApplication.class, args);
+    }	
+}
+```
+### 결과 확인
+* 위와 같이 설정 후 다시 확인해보면 올라가지 않은 서버에 대해서는 라우팅 하지 않는걸 확인할 수 있다.
+* configuration class를 생성하지 않고 application.yml에 properties를 추가하여 configuration을 변경할 수도 있다.
+```yml
+store:
+  ribbon:
+    listOfServers: localhost:8888,localhost:8090
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule #IRule
+    NFLoadBalancerPingClassName: com.netflix.loadbalancer.PingUrl #IPing
+```
