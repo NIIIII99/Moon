@@ -107,6 +107,6 @@ store:
 ```
 
 * 참고 사이트
-https://cloud.spring.io/spring-cloud-static/Finchley.SR1/single/spring-cloud.html#spring-cloud-ribbon
-https://github.com/Netflix/ribbon/wiki/Working-with-load-balancers
-https://thepracticaldeveloper.com/2017/06/28/how-to-fix-eureka-taking-too-long-to-deregister-instances/
+ - https://cloud.spring.io/spring-cloud-static/Finchley.SR1/single/spring-cloud.html#spring-cloud-ribbon
+ - https://github.com/Netflix/ribbon/wiki/Working-with-load-balancers
+ - https://thepracticaldeveloper.com/2017/06/28/how-to-fix-eureka-taking-too-long-to-deregister-instances/
