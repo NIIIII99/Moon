@@ -41,4 +41,29 @@ store: #원하는 client server 명
     listOfServers: localhost:8888,localhost:8090 #라우팅하고자 하는 server list
 ...    
 ```
+### @LoadBalanced를 통한 RestTemplate으로 호출
+* 클라이언트 서버를 호출하는 부분을 아래와 같이 수정한다. 
+```java
+	@LoadBalanced
+	@Bean
+	RestTemplate restTemplate(){
+		return new RestTemplate();
+	}
+	
+	@Autowired
+	LoadBalancerClient loadBalancer;
+    
+	@Autowired
+	RestTemplate restTemplate;
 
+	@GetMapping("/hi")
+	public void hi() {
+		String greeting = this.restTemplate.getForObject("http://store/", String.class); //클라이언트 서버 이름
+		return;
+	}
+```
+### 결과 확인
+수정 후 확인해보면 라운드로빈 방식으로 서버 목록에 있는 서버들을 라우팅 한다는걸 알 수 있다.
+하지만 서버들 중 하나가 내려가있는 상황에도 서버의 상태와 상관없이 라운드 로빈으로 라우팅 하게 된다. 다음에는 정상적인 서버에만 라우팅 할 수 있도록 Ribbon의 Configuration을 변경해보겠다.
+
+## Ribbon의 Configuration 변경
