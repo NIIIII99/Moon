@@ -56,7 +56,8 @@ comments: true
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${LOG_FILE}_ES_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
 			<maxHistory>30</maxHistory>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+			<timeBasedFileNamingAndTriggeringPolicy 
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>100MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>		
@@ -70,4 +71,59 @@ comments: true
 	</logger>	
 ```
 
-## com.myproject.filter 에서
+## com.myproject.filter 에서 로그 설정
+이 서비스에서는 servlet filter에서 어떤 http call이 발생하는지 request와 response 정보를 확인하는 로그를 설정한다.
+- filter class를 작성
+```java
+package com.myproject.filter
+
+@Slf4j
+@WebFilter(urlPatterns = "/myproject/*") //해당 url일때만 filter 설정
+public class Myfilter implements Filter {
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res = (HttpServletResponse) response;
+				
+		MDC.put("requestUri", uri);
+		MDC.put("method", req.getMethod());		
+		MDC.put("reqRes", " Request");        
+		log.info("{}", "Request");
+
+		chain.doFilter(request, response);
+		
+		// Response
+		MDC.put("reqRes", " Response");
+		MDC.put("status", res.getStatus()); // Req or Res
+		log.info("{}", "Response");
+
+		MDC.clear();
+	}
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+		// TODO Auto-generated method stub
+	}
+
+}
+```
+
+## Main application에서 Servlet filter 설정
+```java
+@SpringBootApplication
+@ServletComponentScan // Servlet Filter
+public class MyprojectApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MyprojectApplication.class, args);
+	}
+}
+```
