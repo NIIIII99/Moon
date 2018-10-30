@@ -127,3 +127,5 @@ public class MyprojectApplication {
 	}
 }
 ```
+## 결과 확인
+Elasticsearch Head 크롬 플러그인을 통하여 해당 로그값이 ES에 적재되는걸 확인할 수 있다.
