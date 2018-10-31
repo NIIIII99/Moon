@@ -28,8 +28,8 @@ comments: true
     <!-- ES appender 추가 -->
 	<appender name="ELASTIC" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
 		<!-- 필수값 -->
-        <url>http://localhost:9200/_bulk</url> <!-- 적재하려는 ES 주소 -->
-		<index>apim_log</index>
+        <url>http://yourserver/_bulk</url> <!-- 적재하려는 ES 주소 -->
+		<index>logs-%date{yyyy-MM-dd}</index>
         <type>log</type>        
         <!-- 선택값 -->
         <!-- ES 내용을 콘솔이나 별도 로그파일로 보려고 하는 경우 반드시 logger name 지정해야 ES 적재 내용이 보임 -->
@@ -129,6 +129,20 @@ public class MyprojectApplication {
 ```
 ## 결과 확인
 Elasticsearch Head 크롬 플러그인을 통하여 해당 로그값이 ES에 적재되는걸 확인할 수 있다.
+
+## 혹시..
+혹시 인덱스를 일자별이 아니라 동일한 인덱스로 사용하는 경우 일자가 달라지면 ES에 적재가 되지 않을 경우가 있다.
+그럴때는 인덱스의 세팅을 아래와 같이 변경해주면된다.
+```sh
+PUT http://yourserver/{index}/_settings
+{
+    "index": {
+        "blocks": {
+            "read_only_allow_delete": "false"
+        }
+    }
+}
+```
 
 ## 참고 사이트
 - https://github.com/internetitem/logback-elasticsearch-appender
