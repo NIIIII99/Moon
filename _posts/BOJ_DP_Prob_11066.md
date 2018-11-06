@@ -1,21 +1,14 @@
-# 11066 FAIL
+# 11066
 
+* MAX_VAL = Integer.MAX_VALUE
+* 최대값 부족으로 10번 이상 실패한 문제.
 
 ```java
-package DP;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.StringTokenizer;
-
-public class Prob_11066 {
+public class Main {
 	static int T, N;
 	static int[] cost, sum;
 	static int[][] dp;
-	static final int MAX_VAL = 100001;
+	static final int MAX_VAL = Integer.MAX_VALUE;
 	//dp[i,j] = dp[i,k]+dp[k,j]+(i~j까지 전체 비용)
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -26,16 +19,19 @@ public class Prob_11066 {
 			N = Integer.parseInt(br.readLine());
 			cost = new int[N+1];
 			sum = new int[N+1];
-			dp = new int[N+1][N+1];
+			dp = new int[501][501];
 			//dp MAX
-			for(int i=0;i<=N;i++) {
-				Arrays.fill(dp[i], MAX_VAL);
+			for(int i=1;i<=N;i++) {
+				for(int j=1;j<=N;j++) {
+					dp[i][j] = -1;
+				}
 			}
 			
 			st = new StringTokenizer(br.readLine());
 			for(int i=1;i<=N;i++) {
 				cost[i] = Integer.parseInt(st.nextToken());
 				sum[i] = sum[i-1]+cost[i];
+//				System.out.println(i+":"+sum[i]);
 			}
 			bw.write(String.valueOf(check(1,N)));
 			bw.newLine();
@@ -46,20 +42,25 @@ public class Prob_11066 {
 		
 	}
 	private static int check(int i, int j) {
-		if(i==j) return 0;
+		if(i>=j) return 0;
+		
+		if(dp[i][j] != -1) {
+			return dp[i][j];
+		}
 		
 		if(j == i+1) {
 			return dp[i][j] = cost[i]+cost[j];
 		}
 		
-		if(dp[i][j] < MAX_VAL) {
-			return dp[i][j];
-		}		
+		dp[i][j] = MAX_VAL;
 		
-		for(int k=i ; k<j ; k++) {
-			dp[i][j] = Math.min(dp[i][j], check(i,k)+check(k+1,j));
+		for(int k=i ; k<=j ; k++) {
+			int tmp = check(i,k)+check(k+1,j)+sum[j] -sum[i-1];
+			dp[i][j]=Math.min(dp[i][j], tmp);
+//			dp[i][j] = Math.min(dp[i][j], check(i,k)+check(k+1,j));
 		}
-		return dp[i][j] = dp[i][j] + sum[j]-sum[i-1]; 
+//		return dp[i][j] = dp[i][j] + sum[j]-sum[i-1]; 
+		return dp[i][j];
 	}
 
 }
