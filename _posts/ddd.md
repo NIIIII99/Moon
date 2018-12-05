@@ -17,15 +17,13 @@
 ```
 
 ```java
-package swcert;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
-public class Prob_0050 {
+public class Main {
 	static int count, cycleCnt, wayCnt, ansCnt;
 	static int[] data, dataRev, visit, ans;
 	public static void main(String[] args) throws Exception {
@@ -132,4 +130,112 @@ public class Prob_0050 {
 	}	
 }
 
+```
+
+```
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
+
+
+
+
+class Main {
+
+ 
+ static int[] sum = new int[100000+1] ;
+ static int[] node,  pathValue, loopArr; 
+ static int[] visit ;
+ static int T, N , Loop;
+ 
+ public static void main(String[] args) throws Exception{
+  // TODO Auto-generated method stub
+  
+  
+  for(int j=1 ; j<=100000 ; j++) {
+   if(j==1) sum[j] = j ;
+   else sum[j] = sum[j-1]+j ;
+  }
+  
+  BufferedReader br = new BufferedReader(new InputStreamReader(System.in)) ;
+  StringTokenizer st = new StringTokenizer(br.readLine());
+  
+  T = Integer.parseInt(st.nextToken()) ;
+  
+  for(int t=1 ; t<=T ; t++) {
+   st = new StringTokenizer(br.readLine());
+   N = Integer.parseInt(st.nextToken()) ;
+   node = new int[N+1] ;
+   
+   pathValue = new int[N+1] ;
+   st = new StringTokenizer(br.readLine());
+   for(int j=1; j<=N ; j++) node[j] = Integer.parseInt(st.nextToken()) ;
+   
+   searchB(t) ;
+   
+   
+  }
+ }
+    public static void searchB(int tcase) { 
+  
+  loopArr = new int[N+1];
+  visit = new int[N+1] ;
+  int cycleNum = 0 ;
+  
+  
+  for(int j=1; j<=N ; j++) {
+   
+   if(visit[j]>0) continue ;   // 방문했으면 아래 로직에서 갈수 있는 거리 저장했으니 패스
+   
+   Loop = 0 ;   
+   visit[j]=1;
+   cycleNum= find(j) ;      // 이미 방문한 배열 구하기
+   
+   if(pathValue[cycleNum] > 0) pathValue[j]= Loop + pathValue[cycleNum] +1;
+   else pathValue[j] = Loop ;
+   
+   if(cycleNum == j) {
+    for(int i=0 ; i<Loop ; i++) pathValue[loopArr[i]] = pathValue[j] ;   // 시작과 동일한 사이클이면(즉 원형 사이클) 전부 같은 값 저장
+   } else {
+    for(int i=0 ; i<Loop ; i++) {
+     if(pathValue[loopArr[i]]==0) pathValue[loopArr[i]] = pathValue[j]-(i+1) ;   
+     
+     if(loopArr[i] == cycleNum) {
+      for(int k=(i+1) ; k<Loop ; k++) 
+       if(pathValue[loopArr[k]]==0) pathValue[loopArr[k]] = pathValue[loopArr[i]] ;
+
+     break ;      
+
+
+     }
+    }
+   }   
+  }
+  
+  long ans =0 ;
+  for(int j=1; j<=N ; j++) ans += sum[pathValue[j]] ;
+  System.out.println("#"+tcase+" "+ans) ;
+ }
+ 
+   
+ 
+ public static int find(int s) {
+
+
+
+
+        int newN = node[s] ;
+        
+        if(visit[newN] == 1) {
+         return newN ;
+        }
+        else {
+         visit[newN]=1;
+         loopArr[Loop++] = newN ;
+         return find(newN) ;
+        }
+  
+ }
+}
 ```
